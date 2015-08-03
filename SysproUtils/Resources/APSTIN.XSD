@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<!-- Copyright 1994-2014 SYSPRO Ltd.-->
+<!--
+     Schema for the Post AP Invoice Business Object
+-->
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="ApplyIfEntireDocumentValid" default="Y">
+		<xsd:annotation>
+			<xsd:documentation>This element indicates whether the entire document must be validated prior to any posting taking place. If set to 'N', each item is validated and rejected if in error or posted if correct. This is the fastest option. If set to 'Y', all items in the document are first validated.If the entire document is valid then items are posted.Default  is 'Y'. Valid values are 'Y' and 'N'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="N"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DefaultDiscountDate">
+		<xsd:annotation>
+			<xsd:documentation>Default discount date. This date will be used as the transaction discount date if no value is supplied against the 'DiscountDate' element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DefaultDueDate">
+		<xsd:annotation>
+			<xsd:documentation>Default due date.  This date will be used as the transaction due date if no value is supplied against the 'DueDate' element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="IgnoreWarnings" default="N">
+		<xsd:annotation>
+			<xsd:documentation>This element indicates whether or not a transaction must be rejected if there are any warnings such as 'Supplier on hold'. (N - No, Y - Yes, W - give a warning message but don't reject the transaction) Default is 'N'</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="W"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerDistributionCurrency" default="L">
+		<xsd:annotation>
+			<xsd:documentation>This element describes whether the value supplied in the 'LedgerValue' element is in local currency or is in the currency of the supplier.This is the value for the G/L distribution entry. It is only used if if the supplier is a foreign currency supplier. Valid values are 'L'-local currency or 'F' - foreign currency.The default is 'L'. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Parameters">
+		<xsd:annotation>
+			<xsd:documentation>This contains parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="false">
+			<xsd:sequence>
+				<xsd:element ref="PostingPeriod"/>
+				<xsd:element ref="IgnoreWarnings"/>
+				<xsd:element ref="ApplyIfEntireDocumentValid"/>
+				<xsd:element ref="ValidateOnly"/>
+				<xsd:element ref="PostZeroAdjustments"/>
+				<xsd:element ref="DefaultDiscountDate"/>
+				<xsd:element ref="DefaultDueDate"/>
+				<xsd:element ref="LedgerDistributionCurrency"/>
+				<xsd:element ref="AutomaticTaxCalculation"/>
+				<xsd:element ref="PermissibleTaxVariance"/>
+				<xsd:element ref="ApArContraTrx"/>
+				<xsd:element name="IgnoreAnalysis" default="Y" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>When adding or maintaining a journal you can specify whether the G/L analysis must be validated for the ledger code. Valid entires are 'Y' (Ingore G/L analysis) or 'N' (Validate G/L analysis). If no value is supplied then a default value of 'Y' will be used. If you are supplying your wn AnalysisEntry number ensure that you have set this flag to "Y" else the program will still validate the analysis.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:whiteSpace value="preserve"/>
+							<xsd:enumeration value="Y"/>
+							<xsd:enumeration value="N"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PostApInvoice">
+		<xsd:annotation>
+			<xsd:documentation>This is the root element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="false">
+			<xsd:sequence>
+				<xsd:element ref="Parameters"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PostZeroAdjustments" default="N">
+		<xsd:annotation>
+			<xsd:documentation>This is only relevant if the 'TransactionType' element has a value of 'A'(adjustment) and the 'TransactionValue' is zero. Valid values are 'N'-no and 'Y'-yes. If set to 'N' then no record is created in the SYSPRO A/P Invoice Payment file. The default is 'N'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PostingPeriod" default="C">
+		<xsd:annotation>
+			<xsd:documentation>Period to which transactions must be posted. Valid values are 'C' for current period, 'P' for previous period 1 and 'B' for before previous period 2.Default is 'C'</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="B"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ValidateOnly" default="N">
+		<xsd:annotation>
+			<xsd:documentation>This element indicates which processing phases are to be performed. If set to 'Y' all items are validated and an XML string is returned with the result of the validation. No posting will take place. If set to 'N', each item is validated and posting is performed based on the value of the element 'ApplyIfEntireDocumentValid'. Default is 'N'. Valid values are 'N' and 'Y'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AutomaticTaxCalculation" default="N">
+		<xsd:annotation>
+			<xsd:documentation>This element indicates whether the tax value of the transaction is to be automatically calculated if it is not supplied in the 'TaxValue' element.Valid values are 'N'o and 'Y'es. The default is 'N'. This element also applies to 2nd tier tax. If EC Vat is installed then the value o this element is always 'N' if the transaction being processed is an EC Acquisition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PermissibleTaxVariance">
+		<xsd:annotation>
+			<xsd:documentation>This element is only relevant if 'TaxBasis' is defined as ‘E’xclusive and the SYSPRO  A/P setup indicates that tax amounts are to be distributed over multiple G/L Tax accounts. The business object calculates and accumulates the tax value of each G/L distribution entry based on the value in 'LedgerValue' and the rate defined against 'LedgerTaxCode'.
+The calculated tax value is compared to the value supplied(or automatically calculated) in the 'TaxValue' element.   If a discrepancy is found and the discrepancy is larger than the 'PermissibleTaxVariance', then the business object will return an error indicating that the calculated tax is not the same as the tax value supplied. If there is a discrepancy, but it is less than or equal to the 'PermissibleTaxVariance', then no error is reported. In this case, the discrepancy value is added to the calculated tax value of the tax code used against the first G/L distribution entry of the transaction. If 2nd tier tax is installed, then the same logic applies to the 2nd tier tax.
+The default is zero.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ApArContraTrx">
+		<xsd:annotation>
+			<xsd:documentation>This element indicates whether the transaction is AP-AR Contra type. If It is set to Y for Yes then all the tax calculation will be ignored and no tax posting will take palce.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+</xsd:schema>

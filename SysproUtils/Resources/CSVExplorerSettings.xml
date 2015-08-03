@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<settings>
+  <DbConnection>Data Source=www.myerpportal.com;Initial Catalog={0};Persist Security Info=True;User ID={1};Password={2}</DbConnection>
+  <DbName>Company1</DbName>
+  <DbUser>syspro</DbUser>
+  <DbPassword>syspro</DbPassword>
+  <AddonDbConnection>Data Source=www.myerpportal.com;Initial Catalog={0};Persist Security Info=True;User ID={1};Password={2}</AddonDbConnection>
+  <AddonDbName>SysproAddonDb</AddonDbName>
+  <AddonDbUser>syspro</AddonDbUser>
+  <AddonDbPassword>syspro</AddonDbPassword>
+  <WcfConnString>net.tcp://www.myerpportal.com:13014/SYSPROWCFService</WcfConnString>
+</settings>

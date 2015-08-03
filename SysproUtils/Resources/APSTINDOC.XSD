@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<!-- Copyright 1994-2014 SYSPRO Ltd.-->
+<!--
+     Schema for the Post AP Invoice Business Object
+-->
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="eSignature">
+		<xsd:annotation>
+			<xsd:documentation>eSignature tag for use outside SYSPRO environment. This element must contain a GUID, in the format {36303032-3330-3031-3038-323434363433}, for the eSignature system to accept the transaction as having been authenticated.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Branch">
+		<xsd:annotation>
+			<xsd:documentation>Optional element that is only relevant if 'TransactionCode' element has a value of 'I'(invoice).If this element is not supplied or if spaces are specified against this element, then the branch against the SYSPRO supplier will be used, otherwise the branch supplied against this element will be used. The branch must be a valid SYSPRO branch.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DiscountAdjustment">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. It is only relevant if the 'TransactionCode' element has a value of 'A' (adjustment), or 'C' (credit note) or 'D' (debit note). This is the value by which the discount value of the original invoice must be adjusted.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DiscountBasis" default="T">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if the 'TransactionCode' element has a value of 'I'(invoice).This element specifies how the value of the discount is to be calculated. (T - discount calculated according to the terms code captured against the SYSPRO supplier, P - discount calculated according to the percentage specified against the 'DiscountPercentageValue' element, V - discount value is specified in the 'DiscountPercentageValue' element). The default is 'T'. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="V"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DiscountDate">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if the 'TransactionCode' element has a value of 'I'(invoice). In order to qualify for the invoice discount, payment must be made to the supplier on or before the discount date. If this element is not supplied or if zeroes are entered against this element, the discount date will be calculated according to the invoice terms against the SYSPRO supplier. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DiscountPercentageValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if 'TransactionCode' element has a value of 'I'(invoice). If 'P' (percentage) has been specified against the 'DiscountBasis' element, then this element specifies the percentage to be applied to the 'DiscountableValue' in order to calculate the value of discount.  The maximum size of the data is 2 integers and 2 decimals.
+If 'V' (value) has been specified against the 'DiscountBasis' element, then this is the value of the discount. The maximum size of the data is 12 integers and 2 decimals.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DiscountableValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Only relevant if the 'TransactionCode' element has a value of 'I'(invoice).If  'T'(invoice terms) or 'P' (percentage) has been specified against 'DiscountBasis' element, then this element specifies how much of the total invoice value is subject to discount. The default is zero.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DueDate">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the date by which the supplier should be paid. If this element is not supplied or if zeroes are entered against this element, the due date will be calculated according to the invoice terms against the SYSPRO supplier. This element is not relevant if the 'TransactionType' element is 'P' (approve registered invoice).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ExchRateAtEntry">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Only relevant if the 'TransactionCode' element has a value of 'I'. If the SYSPRO supplier is a local currency supplier the value of this element is ignored and an exchange rate of 1 is always used. For foreign currency SYSPRO suppliers, the following rules apply:
+If this element is not supplied or a value of zero is supplied, the exchange rate against the SYSPRO currency code is used as the default.
+ 
+If this element is supplied and the SYSPRO currency code is setup with a non-fixed exchange rate, then the value against the element is used. 
+If this element is supplied and the SYSPRO currency code is setup with a fixed exchange rate, then the value against the element must match the exchange rate setup against the SYSPRO currency code. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FixedExchRate">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Only relevant if the 'TransactionCode' element has a value of 'I'. If the SYSPRO supplier is a local currency supplier the value of this element is ignored.  It is mainly used to ignore invoices for revaluation. Valid values 'Y' and 'N'</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Invoice">
+		<xsd:annotation>
+			<xsd:documentation>Mandatory element. The invoice must not exist on the SYSPRO Accounts Payable invoice file or on the SYSPRO Accounts Payable Registered invoice file if the 'TransactionCode' element has a value of 'I'(invoice). If the 'TransactionCode' element has a value of 'A'(adjustment), 'C'(credit note) or 'D'(debit note), then the invoice must exist on the SYSPRO Accounts Payable invoice file. If the 'TransactionCode' element has a value of 'P'(approve registered invoice), then the invoice must exist on the SYSPRO Accounts Payable registered invoice file and it must not exist on the SYSPRO Accounts Payable invoice file.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="InvoiceDate">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. If this element is not supplied or if zeroes are entered against this element, the current system date will be used as the default. This element is not relevant if the 'TransactionType' element is 'P' (approve registered invoice).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Item">
+		<xsd:annotation>
+			<xsd:documentation>Mandatory element.This is the top element for all data required for the transaction. This element can occur multiple times as the business object caters for the posting of multiple transactions to multiple suppliers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="false">
+			<xsd:sequence>
+				<xsd:element ref="eSignature" minOccurs="0"/>
+				<xsd:element ref="Supplier"/>
+				<xsd:element ref="TransactionCode"/>
+				<xsd:element ref="Branch" minOccurs="0"/>
+				<xsd:element ref="Invoice"/>
+				<xsd:element ref="TransactionValue"/>
+				<xsd:element ref="FreightCharge" minOccurs="0"/>
+				<xsd:element ref="MiscellaneousCharge" minOccurs="0"/>
+				<xsd:element ref="Notation"/>
+				<xsd:element ref="TransactionReference"/>
+				<xsd:element ref="JournalNotation"/>
+				<xsd:element ref="DiscountBasis" minOccurs="0"/>
+				<xsd:element ref="DiscountableValue" minOccurs="0"/>
+				<xsd:element ref="DiscountPercentageValue" minOccurs="0"/>
+				<xsd:element ref="DiscountAdjustment" minOccurs="0"/>
+				<xsd:element ref="InvoiceDate"/>
+				<xsd:element ref="DueDate"/>
+				<xsd:element ref="DiscountDate"/>
+				<xsd:element ref="ExchRateAtEntry" minOccurs="0"/>
+				<xsd:element ref="FixedExchRate"/>
+				<xsd:element ref="TaxBasis"/>
+				<xsd:element name="CalculateQstOnTax">
+					<xsd:annotation>
+						<xsd:documentation>Optional element. It is only relevant if the AP Setup indicates the 2nd tier tax is required. This element indicates how the value of 2nd tier tax is to be calculated. Valid values are 'Y' (yes) or 'N' (no). If the element is not supplied or if spaces are supplied, the default is derived from the AP Setup option 'Second tier tax calculated on tax'.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string"/>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element ref="TaxCode"/>
+				<xsd:element ref="TaxValue"/>
+				<xsd:element ref="SecondTaxCode"/>
+				<xsd:element ref="SecondTaxValue"/>
+				<xsd:element ref="EcAcquisition" minOccurs="0"/>
+				<xsd:element ref="Nationality" minOccurs="0"/>
+				<xsd:element ref="ReestablishInvoice" minOccurs="0"/>
+				<xsd:element name="AnalysisEntry" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>If an analysis entry number has been assigned to this detail line, then use this element to store the analysis entry number. If Analysis Line entry is passed then that will overwrite and analysis number supplied in the AnalysisEntry element. </xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:whiteSpace value="preserve"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="AnalysisLineEntry" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>If IgnoreAnalysis is set to 'Y" this node and all it's elements are ignored. If you are suuplying your own AnalysisEntry Number ensure that you have set IgnoreAnalysis to "Y"</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="AnalysisCode1" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an analysis code 1 for the analysis entry you are createing </xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode2" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 2 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode3" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an analysis code 3 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode4" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 4 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode5" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 5 for the analysis entry you are createing</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="StartDate" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify a start date for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="EndDate" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an end date for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="EntryAmount" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You must specify and entry amount for the analysis entry you are creating. The entry amount entered here must be exclusive of tax.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Comment" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can enter a comment for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="GrnDetails" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="LedgerDistribution" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="JournalNotation">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Journal notation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the SYSPRO ledger code to which the value of the 'LedgerValue' element is to be posted. If  SYSPRO G/L integration  for Accounts Payable is detail or summary, then the ledger code must be a valid SYSPRO ledger code.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerDistribution">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the top element for all data supplied for the distribution of the transaction value to the relevant General Ledger accounts. This element can occur multiple times within the 'Item' element. Each occurrence represents all the data applicable to post a value to a SYSPRO General Ledger account.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="false">
+			<xsd:sequence>
+				<xsd:element ref="LedgerCode"/>
+				<xsd:element ref="PasswordForLedgerCode"/>
+				<xsd:element ref="LedgerTaxCode"/>
+				<xsd:element ref="LedgerSecondTaxCode"/>
+				<xsd:element ref="LedgerNotation"/>
+				<xsd:element ref="LedgerValue"/>
+				<xsd:element name="AnalysisEntry" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>If an analysis entry number has been assigned to this detail line, then use this element to store the analysis entry number. If Analysis Line entry is passed then that will overwrite and analysis number supplied in the AnalysisEntry element. </xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:whiteSpace value="preserve"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="AnalysisLineEntry" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>If IgnoreAnalysis is set to 'Y" this node and all it's elements are ignored. If you are suuplying your own AnalysisEntry Number ensure that you have set IgnoreAnalysis to "Y"</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="AnalysisCode1" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an analysis code 1 for the analysis entry you are createing </xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode2" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 2 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode3" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an analysis code 3 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode4" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 4 for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="AnalysisCode5" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify and analysis code 5 for the analysis entry you are createing</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="StartDate" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify a start date for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="EndDate" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can specify an end date for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="EntryAmount" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You must specify and entry amount for the analysis entry you are creating. The entry amount entered here must be exclusive of tax.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Comment" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>You can enter a comment for the analysis entry you are creating</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:whiteSpace value="preserve"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LedgerNotation">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if the SYSPRO A/P setup has the option 'Ask notation per detail distribution' set on. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerSecondTaxCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This is the  tax code that is used to calculate the value of 2nd tier tax of the G/L distribution entry.Only relevant if SYSPRO A/P setup options indicate that 2nd tier tax is required and the tax distribution method is detail or summary or if the SYSPRO G/L setup options indicate that the global tax file is required. 2nd tier tax is not applicable to foreign currency suppliers or to EC acquisitions.It must be a valid SYSPRO tax code. If this element is not supplied, then the default that is used depends on your SYSPRO setup options.
+EC Vat not required, A/P not integrated to G/L -  defaults to value supplied against 'TaxCode' element. If this is spaces, then defaults to 2nd tier  A/P Tax code in SYSPRO A/P Setup.
+
+EC Vat not required , A/P integrated to G/L - defaults to 2nd tier tax code defined against the G/L code.If this is spaces, then defaults to value supplied in 'TaxCode' element. If this is spaces, then defaults to  A/P Tax code in SYSPRO A/P setup.
+
+EC Vat required, A/P not integrated to G/L and default to supplier tax is set to 'N' -
+1) Non EC VAT supplier or EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to 2nd tier  A/P Tax code in SYSPRO A/P Setup.
+2)EC Vat supplier and acquisition always uses 2nd tier A/P Tax code in SYSPRO A/P Setup irrespective of the value supplied in the 'LedgerTaxCode' element.
+
+EC Vat required, A/P integrated to G/L, and default to supplier tax is set to 'N' -
+1)Non EC Vat supplier or EC Vat supplier non acquisition defaults to tax code defined against the G/L code. If this is spaces the defaults to the value supplied against the 'TaxCode' element. If this is spaces then defaults to 2nd tier A/P Tax Code in SYSPRO A/P Setup.
+2) EC Vat supplier and acquisition always uses the A/P Tax Code defined in SYSPRO A/P Setup.   
+
+EC Vat required, A/P not integrated to G/L, default to supplier tax code is set to 'Y'-
+1) Non EC Vat supplier or EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to 2nd tier A/P Tax Code in SYSPRO A/P Setup.
+2) EC Vat supplier and acquisition always uses the EC Vat code defined against the supplier irrespective of the value supplied in the 'LedgerTaxCode' element.
+
+EC Vat required, A/P integrated to G/L, default to supplier tax code is set to 'Y'-
+1)Non EC Vat supplier defaults to tax code defined against G/L code. If this is spaces then defaults to value provided in 'TaxCode' element. If this is spaces then defaults to 2nd tier A/P Tax Code in SYSPRO A/P Setup.
+2)EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to 2nd tier A/P Tax Code in SYSPRO A/P Setup.
+3) EC Vat supplier and acquisition always uses the EC Vat code defined against the supplier irrespective of the value supplied in the 'LedgerTaxCode' element.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="H"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="KL"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="NO"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="Q"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="U"/>
+				<xsd:enumeration value="V"/>
+				<xsd:enumeration value="W"/>
+				<xsd:enumeration value="X"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="Z"/>
+				<xsd:enumeration value=""/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerTaxCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.Only relevant if SYSPRO A/P setup options indicate that the tax distribution method is detail or global tax is required. It must be a valid SYSPRO tax code.The SYSPRO tax rate defined against the 'LedgerTaxCode' is used to calculate the value of the tax for the G/L distribution entry. If this element is not supplied then the default depends on the SYSPRO Setup options:
+EC Vat not required, A/P not integrated to G/L -  defaults to value supplied against 'TaxCode' element. If this is spaces, then defaults to  A/P Tax code in SYSPRO A/P Setup.
+
+EC Vat not required , A/P integrated to G/L - defaults to tax code defined against the G/L code.If this is spaces, then defaults to value supplied in 'TaxCode' element. If this is spaces, then defaults to  A/P Tax code in SYSPRO A/P setup.
+
+EC Vat required, A/P not integrated to G/L and default to supplier tax is set to 'N' -
+1) Non EC VAT supplier or EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to A/P Tax code in SYSPRO A/P Setup.
+2)EC Vat supplier and acquisition always uses A/P Tax code in SYSPRO A/P Setup irrespective of the value supplied in the 'LedgerTaxCode' element.
+
+EC Vat required, A/P integrated to G/L, and default to supplier tax is set to 'N' -
+1)Non EC Vat supplier or EC Vat supplier non acquisition defaults to tax code defined against the G/L code. If this is spaces the defaults to the value supplied against the 'TaxCode' element. If this is spaces then defaults to A/P Tax Code in SYSPRO A/P Setup.
+2) EC Vat supplier and acquisition always uses the A/P Tax Code defined in SYSPRO A/P Setup.   
+
+EC Vat required, A/P not integrated to G/L, default to supplier tax code is set to 'Y'-
+1) Non EC Vat supplier or EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to A/P Tax Code in SYSPRO A/P Setup.
+2) EC Vat supplier and acquisition always uses the EC Vat code defined against the supplier irrespective of the value supplied in the 'LedgerTaxCode' element.
+
+EC Vat required, A/P integrated to G/L, default to supplier tax code is set to 'Y'-
+1)Non EC Vat supplier defaults to tax code defined against G/L code. If this is spaces then defaults to value provided in 'TaxCode' element. If this is spaces then defaults to A/P Tax Code in SYSPRO A/P Setup.
+2)EC Vat supplier non acquisition defaults to value supplied in 'TaxCode' element. If this is spaces then defaults to A/P Tax Code in SYSPRO A/P Setup.
+3) EC Vat supplier and acquisition always uses the EC Vat code defined against the supplier irrespective of the value supplied in the 'LedgerTaxCode' element.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="H"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="K"/>
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="O"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="Q"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="U"/>
+				<xsd:enumeration value="V"/>
+				<xsd:enumeration value="W"/>
+				<xsd:enumeration value="X"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="Z"/>
+				<xsd:enumeration value=""/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LedgerValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element: This is the value to be allocated to the ledger code supplied in the 'LedgerCode' element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Notation">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if the SYSPRO A/P setup has the option 'Ask notation per detail distribution' set on. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PasswordForLedgerCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This field defines the password associated with the ledger code supplied in the 'LedgerCode' element. This must be valid if the ledger code has a password defined against it in SYSPRO.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PostApInvoice">
+		<xsd:annotation>
+			<xsd:documentation>Mandatory element. This is the root element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Item" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SecondTaxCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if SYSPRO A/P setup Tax distribution method is ‘D’ or ‘S’ or G/L setup indicates that a Global tax file is required and 2nd tier tax is required.  Valid values are A-Z or spaces.
+If the element value is spaces,  then the tax code is not validated.In all  other cases the tax code must be a valid SYSPRO tax code.
+ If the 'AutomaticTaxCalculation' element has a value of 'Y' and the 'TaxValue' element is not supplied or has a value of spaces, then the value against the 'SecondTaxCode' element is used to determine the tax rate to use to automatically calculate the value of tax of the transaction.
+2n Tier tax is not relevant for foreign currency suppliers or EC Vat acquisitions.If this element is not supplied the default that is used depends on the SYSPRO A/P setup options:
+EC Vat not required - defaults to A/P Tax code defined in SYSPRO A/P Setup
+
+EC Vat required and default to supplier tax is set to 'N' - 
+1) Non EC Vat supplier defaults to A/P Tax code defined in SYSPRO A/P Setup
+2) EC Vat supplier and non acquisition defaults to A/P Tax code defined in SYSPRO A/P Setup.
+
+EC Vat supplier and default to supplier tax code is set to 'Y' -
+1) Non EC Vat supplier defaults to default A/P Tax code defined in SYSPRO A/P setup.
+2)EC Vat supplier non acquisition defaults to EC Vat code defined against the supplier.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="GH"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="K"/>
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="O"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="Q"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="U"/>
+				<xsd:enumeration value="V"/>
+				<xsd:enumeration value="W"/>
+				<xsd:enumeration value="X"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="Z"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SecondTaxValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if SYSPRO A/P setup Tax distribution method is ‘D’ or ‘S’ and '2nd tier tax' is required. This element contains the value of the 2nd tier tax of the transaction. If this element is not supplied or a value of spaces is supplied, AND the 'AutomaticTaxCalculation' element has a value of 'Y', then the business object will automatically calculate tax based on the SYSPRO tax rate held against the tax code supplied in the 'SecondTaxCode' element. If the 'AutomaticTaxCalculation' element has a value of 'N' then the default value of 'SecondTaxValue' is zero.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Supplier">
+		<xsd:annotation>
+			<xsd:documentation>Mandatory element. Enter the SYSPRO supplier applicable to the transaction. This must be a valid SYSPRO supplier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TaxBasis" default="E">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element indicates whether the tax is exclusive or inclusive. Valid options are 'E'(exclusive) or 'I'(inclusive). The default is 'E'.
+If EC Vat is installed and the transaction supplied is an EC Acquisition, the value of this field is an 'E', irrespective of the value supplied.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="I"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CalculateQstOnTax">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. It is only relevant if the AP Setup indicates the 2nd tier tax is required. This element indicates how the value of 2nd tier tax is to be calculated. Valid values are 'Y' (yes) or 'N' (no). If the element is not supplied or if spaces are supplied, the default is derived from the AP Setup option 'Second tier tax calculated on tax'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TaxCode">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if SYSPRO A/P setup Tax distribution method is ‘D’ or ‘S’ or G/L setup indicates that a Global tax file is required.  Valid values are A-Z or spaces.
+If the element value is spaces,  then the tax code is not validated.In all  other cases the tax code must be a valid SYSPRO tax code.
+ If the 'AutomaticTaxCalculation' element has a value of 'Y' and the 'TaxValue' element is not supplied or has a value of spaces, then the value against the 'TaxCode' element is used to determine the tax rate to use to automatically calculate the value of tax of the transaction.
+If this element is not supplied the default that is used depends on the SYSPRO A/P setup options:
+EC Vat not required - defaults to A/P Tax code defined in SYSPRO A/P Setup
+
+EC Vat required and default to supplier tax is set to 'N' - 
+1) Non EC Vat supplier defaults to A/P Tax code defined in SYSPRO A/P Setup
+2) EC Vat supplier and non acquisition defaults to A/P Tax code defined in SYSPRO A/P Setup.
+3) EC Vat supplier and acquisition always uses default A/P Tax code defined in SYSPRO A/P Setup irresepective of what is supplied in the element.
+
+EC Vat supplier and default to supplier tax code is set to 'Y' -
+1) Non EC Vat supplier defaults to default A/P Tax code defined in SYSPRO A/P setup.
+2)EC Vat supplier non acquisition defaults to EC Vat code defined against the supplier.
+3)EC Vat supplier and acquisition always uses the EC Vat code defined against the supplier irrespective of the value supplied against the element. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="H"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="K"/>
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="O"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="Q"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="U"/>
+				<xsd:enumeration value="V"/>
+				<xsd:enumeration value="W"/>
+				<xsd:enumeration value="X"/>
+				<xsd:enumeration value="Y"/>
+				<xsd:enumeration value="Z"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TaxValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element.This element is only relevant if SYSPRO A/P setup Tax distribution method is ‘D’ or ‘S’ or G/L setup indicates that a Global tax file is required. This element contains the value of the tax of the transaction. If this element is not supplied or a value of spaces is supplied, AND the 'AutomaticTaxCalculation' element has a value of 'Y', then the business object will automatically calculate tax based on the SYSPRO tax rate held against the tax code supplied in the 'TaxCode' element. If the 'AutomaticTaxCalculation' element has a value of 'N' then the default value of 'TaxValue' is zero.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TransactionReference">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Transaction reference. This element is not relevant if the 'TransactionType' element is 'P' (approve registered invoice).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TransactionCode" default="I">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. Indicates whether the transaction we are posting is an invoice,adjustment,debit note, credit note, or approving a registered invoice.Valid options are 'I' (invoice), 'A'(adjustment),'C'(credit note), 'D'(debit note), 'P'(approve registered invoice). The default is 'I'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="P"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TransactionValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the value of the transaction inclusive of tax.
+This element is not relevant if the 'TransactionType' element is 'P'(approve registered invoice).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="EcAcquisition" default="Y">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if EC VAT system is required as per the SYSPRO Tax Options program. Valid options are 'Y' - yes and 'N'-no. If 'Y' is supplied then the invoice relates to an acquisition from an EC supplier (as defined by the EC regulations). 
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Nationality">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if EC VAT system is required as per the SYSPRO Tax Options program. If this element is not supplied or if blanks are supplied, the element value defaults to the nationality code of the supplier. This must be a valid SYSPRO nationality code.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnDetails">
+		<xsd:annotation>
+			<xsd:documentation>Optional or mandatory element. This is the top element for all data supplied for matching GRN lines. This element can occur multiple times within the 'Item' element. Each occurrence represents all the data applicable to match a GRN line against the SYSPRO AP invoice. If the SYSPRO Operator activity 'AP Untick GRN matching required' is unticked, then this element is mandatory.                 </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType mixed="false">
+			<xsd:sequence>
+				<xsd:element ref="GrnDetailKey" minOccurs="0"/>
+				<xsd:element ref="GrnMatchType" minOccurs="0"/>
+				<xsd:element ref="GrnMatchValue" minOccurs="0"/>
+				<xsd:element ref="GrnPartialMatchQuantity" minOccurs="0"/>
+				<xsd:element ref="GrnPartialMatchValue" minOccurs="0"/>
+				<xsd:element ref="GrnSupplier" minOccurs="0"/>
+				<xsd:element ref="GrnGrn" minOccurs="0"/>
+				<xsd:element ref="GrnFlag" minOccurs="0"/>
+				<xsd:element ref="GrnJournal" minOccurs="0"/>
+				<xsd:element ref="GrnEntry" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="GrnDetailKey">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the key to the SYSPRO GRN detail record that you wish to select for GRN matching. If the GrnSupplier element is supplied, then this element is ignored and the GrnSupplier,GrnGrn,GrnFlag,GrnJournal and GrnEntry elements are used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnMatchType">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element describes the type of Grn matching that is to be performed. Valid values are P, U, or O. 
+P - partial matching. The quantitiy to match must be supplied in the element 'PartialMatchQuantity' and the value to match in the element 'PartialMatchValue'.
+U - the GRN will be updated to be fully matched. The value to match must be supplied in the element 'GrnMatchValue'.
+O - the GRN will be updated to be fully matched.  The current outstanding unmatched value  is calculated and will be used as the value to match.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="U"/>
+				<xsd:enumeration value="O"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnPartialMatchQuantity">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if the value of the 'GrnMatchType' element is 'P'. This is the partial quantity to match for GRN matching.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnPartialMatchValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if the value of the 'GrnMatchType' element is 'P'. This is the partial value to match for GRN matching.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnMatchValue">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This element is only relevant if the value of the 'GrnMatchType' element is 'U'. This is the value to match for GRN matching.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnSupplier">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the  supplier part of the key, to the SYSPRO GRN detail record that you wish to select for GRN matching. If the field is not supplied or spaces are supplied, then the GrnDetailKey is used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnGrn">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the GRN number part of the key, to the SYSPRO GRN detail record that you wish to select for GRN matching. If the GrnSupplier element is not supplied or spaces are supplied, then the GrnDetailKey is used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnFlag">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the GRN source part of the key, to the SYSPRO GRN detail record that you wish to select for GRN matching. Valid values ar 'G' or 'I'.  If the GrnSupplier element is not supplied or spaces are supplied, then the GrnDetailKey is used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnJournal">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the journal number part of the key, to the SYSPRO GRN detail record that you wish to select for GRN matching. If the GrnSupplier element is not supplied or spaces are supplied, then the GrnDetailKey is used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GrnEntry">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. This is the entry number part of the key, to the SYSPRO GRN detail record that you wish to select for GRN matching. If the GrnSupplier element is not supplied or spaces are supplied, then the GrnDetailKey is used as the entire key to the SYSPRO GRN detail record.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FreightCharge">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. The freight charge is used to calculate the 'Invoice merchandise value'. The 'Invoice merchandise value' is used in GRN matching. The ledger code to which the freight charge is to be distributed must be supplied in the XMLIN under the LedgerDistribution elements.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="MiscellaneousCharge">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. The miscellaneous charge is used to calculate the 'Invoice merchandise value'. The 'Invoice merchandise value' is used in GRN matching. The ledger code to which the miscellaneous charge is to be distributed must be supplied in the XMLIN under the LedgerDistribution elements.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ReestablishInvoice" default="N">
+		<xsd:annotation>
+			<xsd:documentation>Optional element. If processing a debit note or a credit note, this element indicates if an invoice is to be re-established if the original invoice has been purged. It is only relevant if the TransactionCode is a 'C' - credit note or a 'D' - debit note. Valid values are 'N' - no or 'Y' -yes. If the element is not supplied or if spaces are supplied, the default value is 'N'.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:whiteSpace value="preserve"/>
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="Y"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+</xsd:schema>

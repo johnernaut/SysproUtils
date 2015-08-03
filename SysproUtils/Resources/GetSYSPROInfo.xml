@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Variables>
+  <SystemVariables>
+    <Operator Value="John"/>
+    <OperatorName Value="John"/>
+    <OperatorEmail Value=""/>
+    <OperatorGroup Value="ADMIN"/>
+    <OperatorLocation Value=""/>
+    <OperatorDefaultARBranch Value="GR"/>
+    <OperatorDefaultAPBranch Value=""/>
+    <OperatorDefaultWarehouse Value=""/>
+    <OperatorLanguage Value="05"/>
+    <CurrentPrinter Value=""/>
+    <SMTPIPAddress Value=""/>
+    <SYSPROVersion Value="7.0"/>
+    <NationalityCode Value="USA"/>
+    <SMTPEmail Value=""/>
+    <MultimediaPath Value="C:\SYSPRO7\MMEDIA\"/>
+    <Company Value="1"/>
+    <CompanyName Value="Demo for Enhanced Trading"/>
+    <CompanyDate Value="20150729"/>
+    <SYSPROProgramName Value=""/>
+    <CancelStandardAction Value=""/>
+    <PostChangeEvent Value=""/>
+    <SYSPROProgramToRun Value=""/>
+    <SYSPROBrowseToRun Value=""/>
+    <ToolbarButton Value=""/>
+    <ActionToInvoke Value=""/>
+    <EspressoPushNotification Value=""/>
+    <LocationX Value="0"/>
+    <LocationY Value="0"/>
+    <GlobalVariable1 Value=""/>
+    <GlobalVariable2 Value=""/>
+    <GlobalVariable3 Value=""/>
+    <GlobalVariable4 Value=""/>
+    <enetGUID Value=""/>
+    <NetworkUserName Value="John"/>
+    <DataSourceName Value="SYSPROServer"/>
+    <CompanyDatabaseName Value="Company1"/>
+    <ConfigurationDatabase Value="Sysprodb"/>
+    <SQLConnectionMethod Value="0"/>
+    <SQLServerName Value=""/>
+    <ConfigurationTable Value="SysproAdmin"/>
+    <LocalCurrency Value="$"/>
+    <DiagnosticNotify Value=""/>
+    <ScriptName Value=""/>
+    <ScriptFunction Value=""/>
+    <DiagnosticAppPath Value="C:\SYSPRO7\BASE\SYSPRO.exe"/>
+    <IPAddress Value=""/>
+    <baseSettingsFolder Value="C:\SYSPRO7\BASE\settings\"/>
+    <SYSPROUserNumber Value="0228"/>
+    <SYSPROInstance Value="0"/>
+    <OperatorRoleTitle Value=""/>
+    <MapURL Value="http://maps.google.com/maps?q=%latitude%,+ %longitude%&amp;iwloc=A&amp;hl=en"/>
+    <OperatorRoleCode Value=""/>
+    <DiagnosticAutoFix Value="0"/>
+    <DiagnosticClientServer Value="0"/>
+    <DiagnosticVersionNumber Value="00000"/>
+    <DiagnosticComputerName Value="SYSPROTEST3"/>
+    <VBSModulesPath Value="C:\SYSPRO7\WORK\vbscripts\vbsmodules\"/>
+    <ClientServer Value="0"/>
+    <PortNumber Value="00000"/>
+    <IPAddress Value=""/>
+    <ServerName Value=""/>
+    <WCFAddress Value=""/>
+    <WCFBasedir Value=""/>
+    <IMPWRKParameters Value=""/>
+    <IMPINIParameters Value="C:\SYSPRO7\WORK\IMPACT.INI"/>
+  </SystemVariables>
+  <Personalization>
+    <OverallTheme Value="04"/>
+    <ThemeColor Value="Silver"/>
+    <UserDefinedSkin Value=""/>
+    <UserDefinedSkinINI Value=""/>
+    <ListviewDefaultFont Value="Tahoma,0008"/>
+    <ListviewCaptionFont Value="Tahoma,0008"/>
+    <DefaultDateFormat Value="{short}"/>
+    <ListviewShowDisabledinGray Value="1"/>
+    <ListviewMultiLineHeadings Value="0"/>
+    <ListviewShadeSortedColumns Value="1"/>
+    <FormReadOnlyColor Value="128128128"/>
+    <FormBackgroundColor Value="000000000"/>
+    <DockingPaneHighlightActive Value="1"/>
+    <DockingPaneShowMaximize Value="1"/>
+  </Personalization>
+</Variables>
