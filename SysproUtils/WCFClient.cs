@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using SYSPROWCFServicesClientLibrary40;
 
 namespace SysproUtils
@@ -39,6 +43,19 @@ namespace SysproUtils
             }
 
             return GUID;
+        }
+
+        public void Logoff(string GUID)
+        {
+            try
+            {
+                GUID = wcfClient.Logoff(GUID);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error logging in to WCF: " + ex.Message);
+                throw ex;
+            }
         }
 
         /// <summary>

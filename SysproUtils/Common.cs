@@ -1,4 +1,10 @@
-﻿namespace SysproUtils
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SysproUtils
 {
     #region UserInfo Struct
     struct UserInfo
@@ -51,6 +57,8 @@
         // Post XML to business object
         string Post(string UserId, string BusinessObject,
             string XmlParameters, string XmlIn);
+
+        void Logoff(string GUID);
     }
     #endregion
 

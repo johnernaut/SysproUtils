@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Xml;
+using System.IO;
 
 using SysproUtils.DAL;
-using System.IO;
 
 /// <summary>
 /// Package used for interacting with Syspro as well as provide helper functions and
@@ -149,6 +149,21 @@ namespace SysproUtils
             {
                 Logger.Log(ex.Message);
                 throw;
+            }
+        }
+
+        public void SwitchCompany(string companyID)
+        {
+            sysproSettings.Company = companyID;
+            try
+            {
+                sysClient.Logoff(userInfo.GUID);
+                retrieveGUID();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error switching company: " + ex.Message);
+                throw ex;
             }
         }
         

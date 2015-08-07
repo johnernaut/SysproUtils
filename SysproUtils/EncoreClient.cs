@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Encore;
 
 namespace SysproUtils
@@ -37,6 +41,8 @@ namespace SysproUtils
 
             return GUID;
         }
+
+        public void Logoff(string GUID) { }
 
         public string Post(string UserId, string BusinessObject, string XmlParameters, string XmlIn)
         {
